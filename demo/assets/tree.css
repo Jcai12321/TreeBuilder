@@ -1,0 +1,48 @@
+.tree ul li {
+  list-style-type:none;
+  position:relative
+}
+.tree ul li::before,
+.tree ul li::after {
+  content:'';
+  left:-10px;
+  position:absolute;
+  right:auto
+}
+.tree ul li::before {
+  border-left:1px solid;
+  height:100%;
+  top:0;
+  width:1px;
+}
+.tree ul li::after {
+  border-top:1px solid;
+  height:1px;
+  top:10px;
+  width:10px
+}
+.tree ul li:last-child::before {
+  height:10px
+}
+.tree ul li > ul {
+  padding:0 15px;
+  display:none;
+}
+.tree ul li.open > ul {
+  display:block;
+}
+.tree ul li a,
+.tree ul li a:hover,
+.tree ul li a:focus,
+.tree ul li a:active {
+  text-decoration:none;
+}
+.tree ul li > button > span.minus {
+  display:none;
+}
+.tree ul li.open > button > span.plus {
+  display:none;
+}
+.tree ul li.open > button > span.minus {
+  display:inline;
+}
