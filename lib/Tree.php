@@ -5,8 +5,10 @@
    * 
    * Utility to quickly build a rekursive tree with the given elements
    * 
-   * (c) Squareflower Websolutions
+   * @copyright 2014 Squareflower Websolutions
+   * @version 0.1
    * @author Lukas Rydygel <hallo@squareflower.de>
+   * @license Licensed under the MIT license
    */
 
   class Tree
