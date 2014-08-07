@@ -6,7 +6,7 @@
    * Utility to quickly build a rekursive tree with the given elements
    * 
    * @copyright 2014 Squareflower Websolutions
-   * @version 0.1.1
+   * @version 0.1.2
    * @author Lukas Rydygel <hallo@squareflower.de>
    * @license Licensed under the MIT license
    */
@@ -124,7 +124,7 @@
      * comma seperated
      * 
      * @return \Tree
-     * @throws Exception
+     * @throws \Exception
      */
     public function add()
     {
@@ -132,7 +132,7 @@
       foreach (func_get_args() as $item) {
         
         if (is_scalar($item)) {
-          throw new Exception("Items must be an array or an object.");
+          throw new \Exception("Items must be an array or an object.");
         }
         
         $id = $this->getter($item, $this->id);
@@ -200,7 +200,7 @@
      * @param array|obj $item
      * @param string $attr
      * @param mixed $value
-     * @throws Exception
+     * @throws \Exception
      */
     protected function setter(&$item, $attr, $value)
     {
@@ -228,7 +228,7 @@
         
       }
       
-      throw new Exception("The attribute '$attr' could not be set.");
+      throw new \Exception("The attribute '$attr' could not be set.");
       
     }
     
@@ -238,7 +238,7 @@
      * @param array|obj $item
      * @param string $attr
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     protected function getter($item, $attr)
     {
@@ -263,7 +263,7 @@
         
       }
       
-      throw new Exception("The attributes '$attr' does not exist.");
+      throw new \Exception("The attributes '$attr' does not exist.");
       
     }
     
@@ -316,6 +316,10 @@
           $convertedItem[$property->name] = $this->getter($item, $property->name);
         }
                 
+      }
+      
+      if (!property_exists($convertedItem, $this->children)) {
+        $convertedItem['children'] = array();
       }
       
       return $convertedItem;
