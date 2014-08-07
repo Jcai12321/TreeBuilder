@@ -6,7 +6,7 @@
    * Utility to quickly build a rekursive tree with the given elements
    * 
    * @copyright 2014 Squareflower Websolutions
-   * @version 0.1
+   * @version 0.1.1
    * @author Lukas Rydygel <hallo@squareflower.de>
    * @license Licensed under the MIT license
    */
@@ -20,6 +20,13 @@
      * @var string
      */
     protected $id;
+    
+    /**
+     * Defines which ID will be used as the root
+     * 
+     * @var mixed
+     */
+    protected $root;
     
     /**
      * The attribute to identify the items parent
@@ -55,6 +62,7 @@
      * @var array
      */
     protected $def = array(
+      'root' => 0,
       'id' => 'id',
       'parent' => 'pid',
       'children' => 'sub',
@@ -269,9 +277,9 @@
       
       $items = array();
       
-      foreach ($this->items as $item) {
+      foreach ($this->items as $id => $item) {
         
-        $sortBy = $this->getter($item, $this->sortBy);
+        $sortBy = $this->getter($item, $this->sortBy)."_$id";
         
         $items[$sortBy] = $this->convertItem($item);
         
@@ -279,7 +287,7 @@
       
       ksort($items);
       
-      return $this->buildRekursive($items);
+      return $this->buildRekursive($items, $this->root);
       
     }
     
@@ -330,7 +338,7 @@
         
         $parent = $this->getter($item, $this->parent);
                   
-        if ((is_null($root) && !$parent) || $parent === $root) {
+        if (is_null($parent) || $parent === $root) {
 
           unset($items[$i]);
           
