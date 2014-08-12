@@ -26,9 +26,17 @@
   
   <body>
   
+    <h4>Here is the html-tree:</h4>
+    
     <div class="tree">
       <? renderBranch($result); ?>
     </div>
+    
+    <h4>Here is the php tree-object:</h4>
+    
+    <pre>
+      <? print_r($tree); ?>
+    </pre>
   
   </body>
   

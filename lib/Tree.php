@@ -6,7 +6,7 @@
    * Utility to quickly build a rekursive tree with the given elements
    * 
    * @copyright 2014 Squareflower Websolutions
-   * @version 0.1.2
+   * @version 0.1.3
    * @author Lukas Rydygel <hallo@squareflower.de>
    * @license Licensed under the MIT license
    */
@@ -318,8 +318,8 @@
                 
       }
       
-      if (!property_exists($convertedItem, $this->children)) {
-        $convertedItem['children'] = array();
+      if (!array_key_exists($this->children, $convertedItem)) {
+        $convertedItem[$this->children] = array();
       }
       
       return $convertedItem;
