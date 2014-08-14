@@ -6,7 +6,7 @@
    * Utility to quickly build a rekursive tree with the given elements
    * 
    * @copyright 2014 Squareflower Websolutions
-   * @version 0.1.3
+   * @version 0.2
    * @author Lukas Rydygel <hallo@squareflower.de>
    * @license Licensed under the MIT license
    */
@@ -117,6 +117,15 @@
     {
       $this->items = array();
       return $this;
+    }
+    
+    /**
+     * Will restore the object
+     */
+    public function reset()
+    {
+      $this->config($this->def);
+      $this->clear();
     }
     
     /**
@@ -263,7 +272,7 @@
         
       }
       
-      throw new \Exception("The attributes '$attr' does not exist.");
+      throw new \Exception("The attribute '$attr' does not exist.");
       
     }
     
@@ -323,6 +332,43 @@
       }
       
       return $convertedItem;
+      
+    }
+    
+    /**
+     * Will render the tree
+     * 
+     * @param string $template
+     * @param mixed $items
+     * @param array $params
+     * @throws \Exception
+     */
+    public function render($template, $items = null, array $params = array())
+    {
+      
+      if (!file_exists($template)) {
+        throw new \Exception("The template '$template' could not be found.");
+      }
+      
+      if (is_null($items)) {
+        $items = $this->build();
+      }
+
+      $fn = function() {
+
+        $items = func_get_arg(1);
+
+        if (!empty($items)) {
+        
+          extract(func_get_args(2));
+          
+          include(func_get_arg(0));
+          
+        }
+
+      };
+
+      $fn($template, $items, $params);
       
     }
     

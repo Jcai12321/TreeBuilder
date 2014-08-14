@@ -1,17 +1,21 @@
-<ul data-storagekey="tree">
+<ul data-storagekey="demoTree">
   
   <? foreach ($items as $item) : ?>
 
-  <li data-branch="branch_<?= $item['id']; ?>">
+  <li data-branch="branch_<?= $item['cca2']; ?>">
 
+    <? if (!empty($item['children'])) : ?>
+    
     <button rel="toggle">
       <span class="plus">+</span>
       <span class="minus">-</span>
     </button>
+    
+    <? endif; ?>
 
     <a href="#"><?= $item['name']; ?></a>
 
-    <?= renderBranch($item['sub']); ?>
+    <?= $this->render('tree.php', $item['children']); ?>
 
   </li>
 
