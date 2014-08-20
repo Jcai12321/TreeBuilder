@@ -6,7 +6,7 @@
    * Utility to quickly build a rekursive tree with the given elements
    * 
    * @copyright 2014 Squareflower Websolutions
-   * @version 0.2
+   * @version 0.2.1
    * @author Lukas Rydygel <hallo@squareflower.de>
    * @license Licensed under the MIT license
    */
@@ -215,15 +215,26 @@
     {
       
       if (is_array($item) && array_key_exists($attr, $item)) {
+        
         $item[$attr] = $value;
         return;
+        
+      } elseif (is_a($item, 'stdClass')) {
+        
+        if (property_exists($item, $attr)) {
+          $item->$attr = $value;
+          reutrn;
+        }
+        
       } elseif (is_object($item)) {
         
         $reflection = new ReflectionProperty(get_class($item), $attr);
         
         if (property_exists($item, $attr) && $reflection->isPublic()) {
+          
           $item->$attr = $value;
           return;
+          
         }
 
         $method = 'set'.ucfirst($attr);
@@ -231,8 +242,10 @@
         $reflection = new ReflectionMethod(get_class($item), $method);
 
         if (method_exists($item, $method) && $reflection->isPublic()) {
+          
           $item->$method($value);
           return;
+          
         }
         
       }
@@ -254,6 +267,12 @@
       
       if (is_array($item) && array_key_exists($attr, $item)) {
         return $item[$attr];
+      } elseif (is_a($item, 'stdClass')) {
+        
+        if (property_exists($item, $attr)) {
+          return $item->$attr;
+        }
+        
       } elseif (is_object($item)) {
         
         $reflection = new ReflectionProperty(get_class($item), $attr);
@@ -312,6 +331,10 @@
       if (is_array($item)) {
         
         $convertedItem = $item;
+        
+      } elseif (is_a($item, 'stdClass')) {
+        
+        $convertedItem = (array) $item;
         
       } elseif (is_object($item)) {
         
