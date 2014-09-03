@@ -6,7 +6,7 @@
    * Utility to quickly build a rekursive tree with the given elements
    * 
    * @copyright 2014 Squareflower Websolutions
-   * @version 0.2.1
+   * @version 0.2.2
    * @author Lukas Rydygel <hallo@squareflower.de>
    * @license Licensed under the MIT license
    */
@@ -84,10 +84,10 @@
     /**
      * Will create a new object
      * 
-     * @param type $config
+     * @param array $config
      * @return \Tree
      */
-    public function getInstance($config)
+    public function getInstance(array $config = array())
     {
       return new self($config);
     }

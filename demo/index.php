@@ -49,7 +49,7 @@
   
   <head>
     
-    <title>Tree 0.2.1</title>
+    <title>Tree 0.2.2</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   
