@@ -35,7 +35,7 @@
   
   try {
   
-    $config = array('id' => 'name', 'parent' => 'region', 'children' => 'children', 'sortBy' => 'name');
+    $config = array('id' => 'name', 'parent' => 'region', 'children' => 'children', 'sortBy' => 'name', 'label' => 'name');
 
     $tree = Tree::getInstance($config)->add($world)->addMany($continents)->addMany($countries)->addMany($states);
 
@@ -49,7 +49,7 @@
   
   <head>
     
-    <title>Tree 0.2.2</title>
+    <title>Tree 0.2.4</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   

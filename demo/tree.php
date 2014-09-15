@@ -14,6 +14,8 @@
     <? endif; ?>
 
     <a href="#"><?= $item['name']; ?></a>
+    
+    <small>[<?= implode('/', $item['path']); ?>]</small>
 
     <?= $this->render('tree.php', $item['children']); ?>
 

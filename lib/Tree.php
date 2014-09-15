@@ -6,7 +6,7 @@
    * Utility to quickly build a rekursive tree with the given elements
    * 
    * @copyright 2014 Squareflower Websolutions
-   * @version 0.2.2
+   * @version 0.2.4
    * @author Lukas Rydygel <hallo@squareflower.de>
    * @license Licensed under the MIT license
    */
@@ -65,6 +65,8 @@
       'root' => 0,
       'id' => 'id',
       'parent' => 'pid',
+      'path' => 'path',
+      'label' => 'label',
       'children' => 'sub',
       'sortBy' => 'id'
     );
@@ -239,9 +241,7 @@
 
         $method = 'set'.ucfirst($attr);
         
-        $reflection = new ReflectionMethod(get_class($item), $method);
-
-        if (method_exists($item, $method) && $reflection->isPublic()) {
+        if (is_callable(array($item, $method))) {
           
           $item->$method($value);
           return;
@@ -282,10 +282,8 @@
         }
         
         $method = 'get'.ucfirst($attr);
-        
-        $reflection = new ReflectionMethod(get_class($item), $method);
-        
-        if (method_exists($item, $method) && $reflection->isPublic()) {
+                
+        if (is_callable(array($item, $method))) {
           return $item->$method();
         }
         
@@ -354,6 +352,10 @@
         $convertedItem[$this->children] = array();
       }
       
+      if (!array_key_exists($this->path, $convertedItem)) {
+        $convertedItem[$this->path] = array();
+      }
+      
       return $convertedItem;
       
     }
@@ -400,14 +402,17 @@
      * 
      * @param array $items
      * @param mixed $root
+     * @param array $path
      * @return array
      */
-    protected function buildRekursive(&$items, $root = null)
+    protected function buildRekursive(&$items, $root = null, array $path = array())
     {
       
       $tree = array();
       
       foreach ($items as $i => $item) {
+        
+        $itemPath = $path;
         
         $parent = $this->getter($item, $this->parent);
                   
@@ -417,10 +422,14 @@
           
           $id = $this->getter($item, $this->id);
           
-          $branch = $this->buildRekursive($items, $id);
+          $itemPath[] = $this->getter($item, $this->label);
+          
+          $this->setter($item, $this->path, $itemPath);
+          
+          $branch = $this->buildRekursive($items, $id, $itemPath);
 
           $this->setter($item, $this->children, $branch);
-
+          
           $tree[] = $item;
           
         }
